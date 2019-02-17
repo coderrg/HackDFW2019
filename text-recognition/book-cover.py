@@ -1,9 +1,13 @@
 from PIL import Image
+import requests
+from io import BytesIO
 from pytesseract import image_to_string
 
 #determine 
 def getBook(imageURL):
-    output = image_to_string(Image.open(imageURL))
+    response = requests.get(imageURL)
+    img = Image.open(BytesIO(response.content))
+    output = image_to_string(img)
     
     #look for key words in the word
     if (output.find("ESL") != -1 or output.find("Spanish") != -1 or output.find("Speakers") != -1):
@@ -21,5 +25,3 @@ def getBook(imageURL):
         return 3
 
     return -1
-    
-print(getBook('esl4.jpg'))
