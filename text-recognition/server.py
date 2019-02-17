@@ -1,3 +1,4 @@
+#from 'book-cover.py' import getBook
 from PIL import Image
 import requests
 from io import BytesIO
@@ -26,4 +27,11 @@ def getBook(imageURL):
 
     return -1
 
-print(getBook("https://scontent-dfw5-1.xx.fbcdn.net/v/t1.15752-0/p280x280/52606010_1541396865994096_3156750135917019136_n.jpg?_nc_cat=110&_nc_ht=scontent-dfw5-1.xx&oh=587fb34c944b8b421230fdc634db0377&oe=5CE89D29"))
+from flask import Flask, redirect, url_for, request
+app = Flask(__name__)
+
+@app.route('/classify/<path:url>')
+def classify (url):
+   return str(getBook(url));
+
+app.run(debug = True)
